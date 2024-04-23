@@ -8,6 +8,8 @@ def minOperations(n):
     to break down a positive integer n into smaller positive integers
     using prime factorization.
     """
+    if (type(n) is not int or n <= 1):
+        return (0)
     operations = 0
 
     for factor in range(2, n + 1):
@@ -17,3 +19,5 @@ def minOperations(n):
         factor += 1
 
     return (operations)
+
+print(minOperations('a'))
