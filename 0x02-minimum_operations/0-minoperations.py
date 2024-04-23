@@ -1,4 +1,6 @@
 #!/usr/bin/pytohn3
+""" This module contains the minOperations function """
+
 
 def minOperations(n):
     """
