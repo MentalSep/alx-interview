@@ -9,10 +9,13 @@ def minOperations(n):
     using prime factorization.
     """
     operations = 0
+    factor = 2
 
-    for factor in range(2, (n // 2) + 1):
-        while (n % factor == 0):
-            operations += factor
-            n = n // factor
+    while n > 1:
+      if n % factor == 0:
+        operations += factor
+        n //= factor
+      else:
+        factor += 1
 
-    return (operations)
+    return operations
