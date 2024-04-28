@@ -10,10 +10,9 @@ def minOperations(n):
     """
     operations = 0
 
-    for factor in range(2, n + 1):
+    for factor in range(2, (n // 2) + 1):
         while (n % factor == 0):
             operations += factor
             n = n // factor
-        factor += 1
 
     return (operations)
