@@ -10,7 +10,7 @@ def parse_line(line):
                      r' - \[.*\] "GET /projects/260 HTTP/1\.1" (\d+) (\d+)$',
                      line)
     if match:
-        status_code = int(match.group(2))
+        status_code = match.group(2)
         file_size = int(match.group(3))
         return status_code, file_size
     else:
@@ -45,7 +45,7 @@ def process_logs():
             status_code, file_size = parse_line(line)
             lines_processed += 1
 
-            if status_code in [200, 301, 400, 401, 403, 404, 405, 500]:
+            if status_code in status_codes:
                 total_file_size += file_size
                 status_codes[status_code] += 1
 
