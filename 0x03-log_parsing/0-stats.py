@@ -16,25 +16,15 @@ def parse_line(line):
 
 def print_statistics(total_file_size, status_codes):
     """Print the total file size and number of lines by status code"""
-    print("File size: {}".format(total_file_size))
-    for code in sorted(status_codes.keys()):
-        if status_codes[code] > 0:
-            print("{:s}: {:d}".format(code, status_codes[code]))
+    print('File size: {}'.format(total_file_size))
+    for code, count in sorted(status_codes.items()):
+        print("{}: {}".format(code, count))
 
 
 def process_logs():
     """Process log lines from stdin and compute statistics"""
     total_file_size = 0
-    status_codes = {
-        '200': 0,
-        '301': 0,
-        '400': 0,
-        '401': 0,
-        '403': 0,
-        '404': 0,
-        '405': 0,
-        '500': 0
-    }
+    status_codes = {}
     lines_processed = 0
 
     try:
@@ -42,15 +32,18 @@ def process_logs():
             status_code, file_size = parse_line(line)
             lines_processed += 1
 
-            if status_code in status_codes:
+            if status_code in ['200', '301', '400',
+                               '401', '403', '404', '405', '500']:
                 total_file_size += file_size
-                status_codes[status_code] += 1
+                status_codes[status_code] = status_codes.get(
+                    status_code, 0) + 1
 
                 if lines_processed % 10 == 0:
                     print_statistics(total_file_size, status_codes)
 
     except KeyboardInterrupt:
-        pass
+        print_statistics(total_file_size, status_codes)
+        raise
     print_statistics(total_file_size, status_codes)
 
 
