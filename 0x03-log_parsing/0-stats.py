@@ -44,12 +44,12 @@ def process_logs():
     try:
         for line in sys.stdin:
             ip_address, status_code, file_size = parse_line(line)
+            lines_processed += 1
 
-            if ip_address is not None and status_code in status_codes:
+            if ip_address is not None:
                 total_file_size += file_size
                 if status_code in status_codes:
                     status_codes[status_code] += 1
-                lines_processed += 1
 
                 if lines_processed % 10 == 0:
                     print_statistics(total_file_size, status_codes)
