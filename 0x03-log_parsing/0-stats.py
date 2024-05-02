@@ -10,12 +10,11 @@ def parse_line(line):
                      r' - \[.*\] "GET /projects/260 HTTP/1\.1" (\d+) (\d+)$',
                      line)
     if match:
-        ip_address = match.group(1)
         status_code = int(match.group(2))
         file_size = int(match.group(3))
-        return ip_address, status_code, file_size
+        return status_code, file_size
     else:
-        return None, None, None
+        return None, None
 
 
 def print_statistics(total_file_size, status_codes):
@@ -43,13 +42,12 @@ def process_logs():
 
     try:
         for line in sys.stdin:
-            ip_address, status_code, file_size = parse_line(line)
+            status_code, file_size = parse_line(line)
             lines_processed += 1
 
-            if ip_address is not None and status_code in status_codes:
+            if status_code in status_codes:
                 total_file_size += file_size
-                if status_code in status_codes:
-                    status_codes[status_code] += 1
+                status_codes[status_code] += 1
 
                 if lines_processed % 10 == 0:
                     print_statistics(total_file_size, status_codes)
