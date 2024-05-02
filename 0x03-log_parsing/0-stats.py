@@ -22,7 +22,7 @@ def print_statistics(total_file_size, status_codes):
     print("File size: {}".format(total_file_size))
     for code in sorted(status_codes.keys()):
         if status_codes[code] > 0:
-            print("{}: {}".format(code, status_codes[code]))
+            print("{:s}: {:d}".format(code, status_codes[code]))
 
 
 def process_logs():
