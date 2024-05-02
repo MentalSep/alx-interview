@@ -53,6 +53,7 @@ def process_logs():
 
     except KeyboardInterrupt:
         print_statistics(total_file_size, status_codes)
+    print_statistics(total_file_size, status_codes)
 
 
 if __name__ == "__main__":
