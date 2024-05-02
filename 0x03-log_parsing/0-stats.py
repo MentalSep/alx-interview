@@ -46,7 +46,7 @@ def process_logs():
             ip_address, status_code, file_size = parse_line(line)
             lines_processed += 1
 
-            if ip_address is not None:
+            if ip_address is not None and status_code in status_codes:
                 total_file_size += file_size
                 if status_code in status_codes:
                     status_codes[status_code] += 1
