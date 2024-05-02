@@ -1,18 +1,21 @@
 #!/usr/bin/python3
 """ Log parsing """
 import sys
+import re
 
 
 def parse_line(line):
     """Parse a log line and extract relevant information"""
-    parts = line.split()
-    if len(parts) == 9:
-        ip_address = parts[0]
-        status_code = parts[-2]
-        file_size = parts[-1]
-        if status_code.isdigit() and file_size.isdigit():
-            return ip_address, int(status_code), int(file_size)
-    return None, None, None
+    match = re.match(r'(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'
+                     r' - \[.*\] "GET /projects/260 HTTP/1\.1" (\d+) (\d+)',
+                     line)
+    if match:
+        ip_address = match.group(1)
+        status_code = int(match.group(2))
+        file_size = int(match.group(3))
+        return ip_address, status_code, file_size
+    else:
+        return None, None, None
 
 
 def print_statistics(total_file_size, status_codes):
