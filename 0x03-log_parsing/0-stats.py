@@ -6,15 +6,12 @@ import re
 
 def parse_line(line):
     """Parse a log line and extract relevant information"""
-    match = re.match(r'(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'
-                     r' - \[.*\] "GET /projects/260 HTTP/1\.1" (\d+) (\d+)$',
-                     line)
-    if match:
-        status_code = match.group(2)
-        file_size = int(match.group(3))
+    parts = line.split()
+    if len(parts) >= 7:
+        status_code = parts[-2]
+        file_size = int(parts[-1])
         return status_code, file_size
-    else:
-        return None, None
+    return None, None
 
 
 def print_statistics(total_file_size, status_codes):
