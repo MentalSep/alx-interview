@@ -45,7 +45,7 @@ def process_logs():
             status_code, file_size = parse_line(line)
             lines_processed += 1
 
-            if status_code in status_codes:
+            if status_code in [200, 301, 400, 401, 403, 404, 405, 500]:
                 total_file_size += file_size
                 status_codes[status_code] += 1
 
