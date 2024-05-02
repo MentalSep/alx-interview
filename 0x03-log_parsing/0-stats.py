@@ -51,9 +51,8 @@ def process_logs():
                 if lines_processed % 10 == 0:
                     print_statistics(total_file_size, status_codes)
 
-    except KeyboardInterrupt:
+    except KeyboardInterrupt, EOFError:
         print_statistics(total_file_size, status_codes)
-    print_statistics(total_file_size, status_codes)
 
 
 if __name__ == "__main__":
