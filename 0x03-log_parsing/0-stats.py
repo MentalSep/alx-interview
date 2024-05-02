@@ -6,7 +6,7 @@ import sys
 def parse_line(line):
     """Parse a log line and extract relevant information"""
     parts = line.split()
-    if len(parts) >= 7:
+    if len(parts) == 9:
         ip_address = parts[0]
         status_code = parts[-2]
         file_size = parts[-1]
