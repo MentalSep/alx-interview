@@ -7,7 +7,7 @@ import re
 def parse_line(line):
     """Parse a log line and extract relevant information"""
     match = re.match(r'(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'
-                     r' - \[.*\] "GET /projects/260 HTTP/1\.1" (\d+) (\d+)',
+                     r' - \[.*\] "GET /projects/260 HTTP/1\.1" (\d+) (\d+)$',
                      line)
     if match:
         ip_address = match.group(1)
