@@ -20,7 +20,7 @@ def validUTF8(data):
                 return False
         else:
             # Check for the expected format 10xxxxxx after the initial byte
-            if not (byte & (1 << 7) and not (byte & (1 << 6))):
+            if not (byte >> 6 == 0b10):
                 return False
 
         count -= 1
