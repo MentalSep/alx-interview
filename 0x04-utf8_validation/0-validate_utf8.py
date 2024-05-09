@@ -4,27 +4,21 @@
 
 def validUTF8(data):
     """ Determines if a given data set represents a valid UTF-8 encoding """
-    num_bytes = 0
+    count = 0
 
-    for num in data:
-        bin_repr = format(num, '#010b')[-8:]
-
-        if num_bytes == 0:
-            num_bytes = len(bin_repr.split('0')[0])
-
-            if num_bytes == 0:
-                continue
-
-            num_bytes = 8 - num_bytes
-
-            if num_bytes == 1 or num_bytes > 4:
+    for byte in data:
+        if count == 0:
+            if byte >> 5 == 0b110:
+                count = 1
+            elif byte >> 4 == 0b1110:
+                count = 2
+            elif byte >> 3 == 0b11110:
+                count = 3
+            elif byte >> 7:
                 return False
-
         else:
-            # Check for the expected format 10xxxxxx after the initial byte
-            if not (bin_repr[0] == '1' and bin_repr[1] == '0'):
+            if byte >> 6 != 0b10:
                 return False
+            count -= 1
 
-            num_bytes -= 1
-
-    return num_bytes == 0
+    return count == 0
