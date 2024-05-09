@@ -7,21 +7,20 @@ def validUTF8(data):
     count = 0
 
     for byte in data:
+        mask = 1 << 7
+        while mask & byte:
+            count += 1
+            mask >>= 1
+
         if count == 0:
-            mask = 1 << 7
-            while mask & byte:
-                count += 1
-                mask >>= 1
+            continue
 
-            if count == 0:
-                continue
+        if count == 1 or count > 4:
+            return False
 
-            if count == 1 or count > 4:
-                return False
-        else:
-            # Check for the expected format 10xxxxxx after the initial byte
-            if not (byte & (1 << 7) and not (byte & (1 << 6))):
-                return False
+        # Check for the expected format 10xxxxxx after the initial byte
+        if not (byte & (1 << 7) and not (byte & (1 << 6))):
+            return False
 
         count -= 1
 
