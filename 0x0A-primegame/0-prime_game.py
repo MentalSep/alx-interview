@@ -3,6 +3,7 @@
 
 
 def isWinner(x, nums):
+    """ Prime Game"""
     if x < 1 or not nums:
         return None
 
